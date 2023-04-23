@@ -6,9 +6,9 @@
 
 using namespace std;
 
+// compare the relevant fields of the two objects
 bool operator==(const RopeNode& lhs, const RopeNode& rhs) 
 {
-// compare the relevant fields of the two objects
     return lhs == rhs;
 }
 
@@ -139,6 +139,7 @@ public:
                 }
             }
 
+            // solving edge case of splitting nodes 
             if(index_helper != 0)
             {
                 string tmp_str1, tmp_str2;
@@ -179,6 +180,7 @@ public:
                 }
 
             }
+            // end of edge case 
             
             RopeNode* newRoot = new RopeNode();
             RopeNode* walk = this->root;
@@ -186,7 +188,7 @@ public:
             tmp->parent = newRoot;
             this->root->weight -= tmp->weight;
 
-            // check if right most child
+            // check if tmp is right most child, to prevent duplication(edge case)
             if(isChild(walk) != tmp)
             {
                 newRoot->right = this->root->right;
