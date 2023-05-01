@@ -31,7 +31,7 @@ public:
         root = new RopeNode("");
     }
 
-    
+    // copy function to copy original node to new node to preserve data    
     RopeNode* copyRope(RopeNode* oldRoot, RopeNode* parent)
     {
         if(oldRoot == nullptr)
@@ -46,7 +46,7 @@ public:
         return copy;
     }
 
-
+    // join two rope nodes
     void concat(Rope &newRope)
     {
         RopeNode* newRoot = new RopeNode();
@@ -63,6 +63,7 @@ public:
         this->root->right->parent = this->root;
     }
 
+    // find the char at index i
     char indexAt(int i)
     {
         RopeNode *p = this->root;
@@ -113,6 +114,9 @@ public:
         
     }
 
+
+    //The first i characters should stay in the current rope, while a new
+    // Rope (newRope) should contain the remaining characters.
     Rope* split(int index, Rope &newRope)
     {
         if(index <= 0)
@@ -125,6 +129,7 @@ public:
             RopeNode* tmp = root;
             int index_helper = index;
 
+            //find the index to split
             while (tmp->left || tmp->right)
             {
                 if(index_helper < tmp->weight)
@@ -139,35 +144,41 @@ public:
                 }
             }
 
-            // solving edge case of splitting nodes 
+            // // Edge case*
+		    // if index_helper is in the middle of a node's value
+		    // split Rope into Ro & pe for example
             if(index_helper != 0)
             {
                 string tmp_str1, tmp_str2;
 
+                // copy string upto index_helper
                 for(int i = 0; i < index_helper; i++)
                 {
                     tmp_str1 += tmp->data[i];
                 }
 
+                //copy string after index_helper
                 for(int i = index_helper; i < tmp->weight; i++)
                 {
                     tmp_str2 += tmp->data[i];
                 }
 
 
+                //Creating pointers for new nodes to store split result
                 tmp->left =  new RopeNode();
                 tmp->right = new RopeNode();
 
-                // left
+                // left node
                 tmp->left->data = tmp_str1;
                 tmp->left->weight = tmp_str1.length();
                 tmp->left->parent = tmp;
 
-                //right
+                //right node
                 tmp->right->data = tmp_str2;
                 tmp->right->weight = tmp_str2.length();
                 tmp->right->parent = tmp;
 
+                //clear parent data
                 tmp->data = "";
                 tmp->weight = tmp->left->weight;
 
