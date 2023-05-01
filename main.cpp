@@ -23,6 +23,7 @@ int main()
     r1.concat(r3);
     // r1.concat(t);
 
+    // everything after i = 6 (including i)is stored in r4
     r1.split(6, r4);
     r1.print();
 
